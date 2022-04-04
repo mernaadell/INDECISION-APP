@@ -59,6 +59,10 @@ function getLocation(location) {
     );
   }
 }
+var count = 0;
+var addOne = function addOne() {
+  console.log("add one");
+};
 var templateTwo = React.createElement(
   'div',
   null,
@@ -73,9 +77,20 @@ var templateTwo = React.createElement(
     'Age: ',
     user.age
   ),
-  getLocation(user.location)
+  getLocation(user.location),
+  React.createElement(
+    'h1',
+    null,
+    'Count: ',
+    count
+  ),
+  React.createElement(
+    'button',
+    { onClick: addOne },
+    'Add one'
+  )
 );
 
 var appRoot = document.getElementById('app');
 
-ReactDOM.render(template, appRoot);
+ReactDOM.render(templateTwo, appRoot);

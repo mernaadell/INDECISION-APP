@@ -30,14 +30,20 @@ function getLocation(location) {
     return <p>Location: {location}</p>;
   }
 }
+var count=0;
+const addOne=()=>{
+  console.log("add one")
+};
 var templateTwo = (
   <div>
     <h1>{user.name ? user.name : 'Anonymous'}</h1>
     {(user.age && user.age >= 18) && <p>Age: {user.age}</p>}
     {getLocation(user.location)}
+    <h1>Count: {count}</h1>
+    <button onClick={addOne} >Add one</button>
   </div>
 );
 
 var appRoot = document.getElementById('app');
 
-ReactDOM.render(template, appRoot);
+ReactDOM.render(templateTwo, appRoot);

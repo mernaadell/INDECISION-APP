@@ -59,38 +59,45 @@ function getLocation(location) {
     );
   }
 }
+// manual binding
 var count = 0;
 var addOne = function addOne() {
+  count++;
+  renderCounterApp(); //rener the application every time i increase the counter
   console.log("add one");
 };
-var templateTwo = React.createElement(
-  'div',
-  null,
-  React.createElement(
-    'h1',
-    null,
-    user.name ? user.name : 'Anonymous'
-  ),
-  user.age && user.age >= 18 && React.createElement(
-    'p',
-    null,
-    'Age: ',
-    user.age
-  ),
-  getLocation(user.location),
-  React.createElement(
-    'h1',
-    null,
-    'Count: ',
-    count
-  ),
-  React.createElement(
-    'button',
-    { onClick: addOne },
-    'Add one'
-  )
-);
 
-var appRoot = document.getElementById('app');
+var renderCounterApp = function renderCounterApp() {
+  var templateTwo = React.createElement(
+    'div',
+    null,
+    React.createElement(
+      'h1',
+      null,
+      user.name ? user.name : 'Anonymous'
+    ),
+    user.age && user.age >= 18 && React.createElement(
+      'p',
+      null,
+      'Age: ',
+      user.age
+    ),
+    getLocation(user.location),
+    React.createElement(
+      'h1',
+      null,
+      'Count: ',
+      count
+    ),
+    React.createElement(
+      'button',
+      { onClick: addOne },
+      'Add one'
+    )
+  );
 
-ReactDOM.render(templateTwo, appRoot);
+  var appRoot = document.getElementById('app');
+
+  ReactDOM.render(templateTwo, appRoot);
+};
+renderCounterApp();

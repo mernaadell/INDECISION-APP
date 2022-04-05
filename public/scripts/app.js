@@ -4,45 +4,69 @@ console.log('App.js is running!');
 //if statement
 //ternary operators
 //logical and operator
-
+var appRoot = document.getElementById('app');
 var app = {
   title: 'Indecision App',
   subtitle: 'Put your life in the hands of a computer',
   options: ['One', 'Two']
 };
-var template = React.createElement(
-  'div',
-  null,
-  React.createElement(
-    'h1',
-    null,
-    app.title
-  ),
-  app.subtitle && React.createElement(
-    'p',
-    null,
-    app.subtitle
-  ),
-  React.createElement(
-    'p',
-    null,
-    app.options.length > 0 ? 'Here are your options' : 'No options'
-  ),
-  React.createElement(
-    'ol',
+var onFormSubmit = function onFormSubmit(e) {
+  e.preventDefault();
+  console.log(app.options);
+  var option = e.target.elements.option.value;
+  if (option) {
+    app.options.push(option);
+    e.target.elements.option.value = "";
+  }
+  render();
+};
+var render = function render() {
+  var template = React.createElement(
+    'div',
     null,
     React.createElement(
-      'li',
+      'h1',
       null,
-      'Item one'
+      app.title
+    ),
+    app.subtitle && React.createElement(
+      'p',
+      null,
+      app.subtitle
     ),
     React.createElement(
-      'li',
+      'p',
       null,
-      'Item two'
+      app.options.length > 0 ? 'Here are your options' : 'No options'
+    ),
+    React.createElement(
+      'ol',
+      null,
+      React.createElement(
+        'li',
+        null,
+        'Item one'
+      ),
+      React.createElement(
+        'li',
+        null,
+        'Item two'
+      )
+    ),
+    React.createElement(
+      'form',
+      { onSubmit: onFormSubmit },
+      React.createElement('input', { type: 'text', name: 'option' }),
+      React.createElement(
+        'button',
+        null,
+        'Submit'
+      )
     )
-  )
-);
+  );
+
+  ReactDOM.render(template, appRoot);
+};
 
 var user = {
   name: 'Andrew',
@@ -59,45 +83,5 @@ function getLocation(location) {
     );
   }
 }
-// manual binding
-var count = 0;
-var addOne = function addOne() {
-  count++;
-  renderCounterApp(); //rener the application every time i increase the counter
-  console.log("add one");
-};
 
-var renderCounterApp = function renderCounterApp() {
-  var templateTwo = React.createElement(
-    'div',
-    null,
-    React.createElement(
-      'h1',
-      null,
-      user.name ? user.name : 'Anonymous'
-    ),
-    user.age && user.age >= 18 && React.createElement(
-      'p',
-      null,
-      'Age: ',
-      user.age
-    ),
-    getLocation(user.location),
-    React.createElement(
-      'h1',
-      null,
-      'Count: ',
-      count
-    ),
-    React.createElement(
-      'button',
-      { onClick: addOne },
-      'Add one'
-    )
-  );
-
-  var appRoot = document.getElementById('app');
-
-  ReactDOM.render(templateTwo, appRoot);
-};
-renderCounterApp();
+render();

@@ -8,7 +8,7 @@ var appRoot = document.getElementById('app');
 var app = {
   title: 'Indecision App',
   subtitle: 'Put your life in the hands of a computer',
-  options: ['One', 'Two']
+  options: []
 };
 var onFormSubmit = function onFormSubmit(e) {
   e.preventDefault();
@@ -18,6 +18,17 @@ var onFormSubmit = function onFormSubmit(e) {
     app.options.push(option);
     e.target.elements.option.value = "";
   }
+  render();
+};
+
+var onMakeDecision = function onMakeDecision() {
+
+  var randomNum = Math.floor(Math.random() * app.options.length);
+  var option = app.options[randomNum];
+  console.log(randomNum);
+};
+var onRemoveAll = function onRemoveAll() {
+  app.options = [];
   render();
 };
 var render = function render() {
@@ -35,6 +46,16 @@ var render = function render() {
       app.subtitle
     ),
     React.createElement(
+      'button',
+      { onClick: onMakeDecision },
+      'What should I do ?'
+    ),
+    React.createElement(
+      'button',
+      { onClick: onRemoveAll },
+      'Remove All'
+    ),
+    React.createElement(
       'p',
       null,
       app.options.length > 0 ? 'Here are your options' : 'No options'
@@ -42,16 +63,13 @@ var render = function render() {
     React.createElement(
       'ol',
       null,
-      React.createElement(
-        'li',
-        null,
-        'Item one'
-      ),
-      React.createElement(
-        'li',
-        null,
-        'Item two'
-      )
+      app.options.map(function (option) {
+        return React.createElement(
+          'li',
+          { key: option },
+          option
+        );
+      })
     ),
     React.createElement(
       'form',
@@ -60,28 +78,12 @@ var render = function render() {
       React.createElement(
         'button',
         null,
-        'Submit'
+        'Add Option'
       )
     )
   );
 
   ReactDOM.render(template, appRoot);
 };
-
-var user = {
-  name: 'Andrew',
-  age: 26,
-  location: 'Philadelphia'
-};
-function getLocation(location) {
-  if (location) {
-    return React.createElement(
-      'p',
-      null,
-      'Location: ',
-      location
-    );
-  }
-}
 
 render();

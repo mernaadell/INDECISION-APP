@@ -6,7 +6,7 @@ var appRoot = document.getElementById('app');
 var app = {
   title: 'Indecision App',
   subtitle: 'Put your life in the hands of a computer',
-  options: ['One', 'Two']
+  options: []
 };
 const onFormSubmit = (e) => {
   e.preventDefault();
@@ -18,19 +18,37 @@ const onFormSubmit = (e) => {
   }
   render()
 }
+
+const onMakeDecision=()=>{
+
+  const randomNum=Math.floor(Math.random()*app.options.length);
+  const option =app.options[randomNum];
+  console.log(randomNum);
+}
+const onRemoveAll=()=>{
+  app.options=[];
+  render();
+  
+}
 const render=()=>{
   var template = (
     <div>
       <h1>{app.title}</h1>
       {app.subtitle && <p>{app.subtitle}</p>}
+      <button onClick={onMakeDecision}>What should I do ?</button>
+      <button onClick={onRemoveAll}>Remove All</button>
       <p>{app.options.length > 0 ? 'Here are your options' : 'No options'}</p>
       <ol>
-        <li>Item one</li>
-        <li>Item two</li>
+  {
+    app.options.map((option)=>{
+      return <li key={option}>{option}</li>
+
+    })
+  }
       </ol>
       <form onSubmit={onFormSubmit}>
         <input type="text" name="option" />
-        <button>Submit</button>
+        <button>Add Option</button>
       </form>
     </div>
   );
@@ -38,15 +56,5 @@ const render=()=>{
   ReactDOM.render(template, appRoot);
 }
 
-var user = {
-  name: 'Andrew',
-  age: 26,
-  location: 'Philadelphia'
-};
-function getLocation(location) {
-  if (location) {
-    return <p>Location: {location}</p>;
-  }
-}
 
 render()
